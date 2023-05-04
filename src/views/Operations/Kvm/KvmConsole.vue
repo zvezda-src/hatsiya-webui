@@ -128,7 +128,7 @@ export default {
       }
       return this.$t('pageKvm.connecting');
     },
-    videoFiles() {
+      videoFiles() {
       return this.$store.getters['kvmConsole/allVideoFiles'];
     },
   },
@@ -140,9 +140,9 @@ export default {
       if (this.consoleWindow == false) this.isConsoleWindow.close();
     },
   },
-  created() {
-    this.$store.dispatch('global/getSystemInfo');
-  },
+//  created() {
+//    this.$store.dispatch('global/getSystemInfo');
+//  },
   mounted() {
     this.openTerminal();
   },
