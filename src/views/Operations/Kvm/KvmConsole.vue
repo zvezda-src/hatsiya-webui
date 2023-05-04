@@ -19,6 +19,20 @@
             v-if="isConnected"
             variant="link"
             type="button"
+            @click="startStopVideoRecord()"
+          >
+            <icon-stop v-if="isVideoRecordStarted" />
+            <icon-recording v-if="!isVideoRecordStarted" />
+            {{
+              !isVideoRecordStarted
+                ? $t('pageKvm.buttonVideoRecordStart')
+                : $t('pageKvm.buttonVideoRecordStop')
+            }}
+          </b-button>
+          <b-button
+            v-if="isConnected"
+            variant="link"
+            type="button"
             @click="sendCtrlAltDel"
           >
             <icon-arrow-down />
@@ -35,12 +49,21 @@
           </b-button>
         </b-col>
       </b-row>
+      <modal-start-video-recording
+        :video-recording="modalStartVideoRecording"
+        @ok="onModalOk"
+      />
     </div>
     <div id="terminal-kvm" ref="panel" :class="terminalClass"></div>
   </div>
 </template>
 
 <script>
+import Axios from 'axios';
+import IconRecording from '@carbon/icons-vue/es/recording/20';
+import IconStop from '@carbon/icons-vue/es/stop/20';
+import ModalStartVideoRecording from './ModalStartVideoRecording';
+import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import RFB from '@novnc/novnc/core/rfb';
 import StatusIcon from '@/components/Global/StatusIcon';
 import IconLaunch from '@carbon/icons-vue/es/launch/20';
@@ -54,7 +77,15 @@ const Disconnected = 2;
 
 export default {
   name: 'KvmConsole',
-  components: { StatusIcon, IconLaunch, IconArrowDown },
+  components: {
+    StatusIcon,
+    IconLaunch,
+    IconArrowDown,
+    IconRecording,
+    IconStop,
+    ModalStartVideoRecording,
+  },
+  mixins: [BVToastMixin],
   props: {
     isFullWindow: {
       type: Boolean,
@@ -71,6 +102,12 @@ export default {
       status: Connecting,
       convasRef: null,
       resizeKvmWindow: null,
+      timer: '',
+      url: `https://${window.location.host}/kvm/download/video/`,
+      downloadVideoInProgress: false,
+      isVideoRecordStarted: false,
+      modalStartVideoRecording: null,
+      autoDownload: true,
     };
   },
   computed: {
@@ -91,6 +128,12 @@ export default {
       }
       return this.$t('pageKvm.connecting');
     },
+    videoFiles() {
+      return this.$store.getters['kvmConsole/allVideoFiles'];
+    },
+  },
+  created() {
+    this.timer = setInterval(this.fetchVideoList, 10000);
   },
   watch: {
     consoleWindow() {
@@ -106,6 +149,7 @@ export default {
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeKvmWindow);
     this.closeTerminal();
+    this.cancelAutoUpdate();
   },
   methods: {
     sendCtrlAltDel() {
@@ -176,6 +220,132 @@ export default {
         'kvmConsoleWindow',
         'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=700,height=550'
       );
+    },
+    forceFileDownload(response, video_file) {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', video_file); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+    },
+    downloadWithVueResource(video_file) {
+      this.$http({
+        method: 'get',
+        url: this.url + video_file,
+        responseType: 'arraybuffer',
+      })
+        .then((response) => {
+          this.forceFileDownload(response, video_file);
+        })
+        .catch(() => console.log('error occured'))
+        .finally(() => {
+          //console.log('req done !!!');
+          this.$store.dispatch('kvmConsole/deleteVideoFile', {
+            video_file,
+          });
+        });
+    },
+    downloadWithAxios(video_file) {
+      Axios({
+        method: 'get',
+        url: this.url + video_file,
+        responseType: 'arraybuffer',
+      })
+        .then((response) => {
+          this.forceFileDownload(response, video_file);
+        })
+        .catch(() => console.log('error occured'))
+        .finally(() => {
+          //console.log('req done !!!');
+          this.$store.dispatch('kvmConsole/deleteVideoFile', {
+            video_file,
+          });
+        });
+    },
+    fetchVideoList1() {
+      //console.log('fetchVideoList ' + this.downloadVideoInProgress);
+      if (!this.downloadVideoInProgress) {
+        //console.log('start downloadWithVueResource');
+        this.downloadVideoInProgress = true;
+        //this.downloadWithVueResource('bmcweb');
+        this.downloadWithAxios('bmcweb');
+        this.downloadVideoInProgress = false;
+        //console.log('stop downloadWithVueResource');
+      }
+    },
+    fetchVideoList() {
+      //console.log('fetchVideoList ' + this.downloadVideoInProgress);
+      if (!this.downloadVideoInProgress) {
+        this.downloadVideoInProgress = true;
+
+        this.$store.dispatch('kvmConsole/getVideoFiles').finally(() => {
+          const t = this.videoFiles;
+          //console.info(t);
+          //console.log('t.length=', t.length);
+          if (t.length > 0) {
+            const video_file = t[0]['file'];
+            //console.log(video_file);
+            //console.log('start download');
+
+            //this.downloadWithVueResource(video_file);
+            this.downloadWithAxios(video_file);
+
+            //console.log('stop download');
+          }
+        });
+
+        this.downloadVideoInProgress = false;
+      }
+    },
+    cancelAutoUpdate() {
+      clearInterval(this.timer);
+      if (this.isVideoRecordStarted) {
+        this.$store.dispatch('kvmConsole/stopVideoRecording').finally(() => {
+          //console.log('stopVideoRecording done');
+          this.$store.dispatch('kvmConsole/clearVideoFileList').finally(() => {
+            //console.log('clearVideoFileList done');
+          });
+        });
+      }
+    },
+    initModaStartVideoRecording(startVideoRecording = null) {
+      this.modalStartVideoRecording = startVideoRecording;
+      this.$bvModal.show('start-video-recording');
+    },
+    startStopVideoRecord() {
+      //console.log('isVideoRecordStarted=', this.isVideoRecordStarted);
+      if (!this.isVideoRecordStarted) {
+        //console.log('start modal');
+        this.initModaStartVideoRecording(null);
+      } else {
+        this.$store.dispatch('kvmConsole/stopVideoRecording');
+        this.isVideoRecordStarted = false;
+        this.fetchVideoList();
+      }
+    },
+    onModalOk({ colorQuality, timeOfPart, FPS, autoDownload }) {
+      //console.log('colorQuality=', colorQuality);
+      //console.log('timeOfPart=', timeOfPart);
+      //console.log('FPS=', FPS);
+      //console.log('autoDownload=', autoDownload);
+
+      this.autoDownload = autoDownload;
+
+      this.$store
+        .dispatch('kvmConsole/startVideoRecording', {
+          colorQuality,
+          FPS,
+          timeOfPart,
+        })
+        .then(() => {
+          //console.log('start success');
+          this.isVideoRecordStarted = true;
+        })
+        .catch(({ message }) => this.errorToast(message))
+        .finally(() => {
+          //console.log('start done');
+        });
     },
   },
 };
