@@ -131,7 +131,7 @@ export default {
       videoFiles() {
       return this.$store.getters['kvmConsole/allVideoFiles'];
     },
-  }
+  },
   watch: {
     consoleWindow() {
       if (this.consoleWindow == false) this.isConsoleWindow.close();
