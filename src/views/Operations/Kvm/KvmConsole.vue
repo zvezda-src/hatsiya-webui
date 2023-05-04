@@ -131,18 +131,15 @@ export default {
       videoFiles() {
       return this.$store.getters['kvmConsole/allVideoFiles'];
     },
-  },
-  created() {
-    this.timer = setInterval(this.fetchVideoList, 10000);
-  },
+  }
   watch: {
     consoleWindow() {
       if (this.consoleWindow == false) this.isConsoleWindow.close();
     },
   },
-//  created() {
-//    this.$store.dispatch('global/getSystemInfo');
-//  },
+  created() {
+    this.$store.dispatch('global/getSystemInfo');
+  },
   mounted() {
     this.openTerminal();
   },
