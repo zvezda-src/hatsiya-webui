@@ -14,6 +14,7 @@ import UserManagement from '@/views/SecurityAndAccess/UserManagement';
 import Login from '@/views/Login';
 import LoginLayout from '@/layouts/LoginLayout';
 import Network from '@/views/Settings/Network';
+import RemoteLogs from '@/views/Settings/RemoteLogs';
 import Overview from '@/views/Overview';
 import PageNotFound from '@/views/PageNotFound';
 import PostCodeLogs from '@/views/Logs/PostCodeLogs';
@@ -228,6 +229,14 @@ const routes = [
         component: Network,
         meta: {
           title: i18n.t('appPageTitle.network'),
+        },
+      },
+      {
+        path: '/settings/remote-logs',
+        name: 'remote-logs',
+        component: RemoteLogs,
+        meta: {
+          title: i18n.t('appPageTitle.remoteLogs'),
         },
       },
       {

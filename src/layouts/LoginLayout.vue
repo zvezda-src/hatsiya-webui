@@ -24,7 +24,7 @@
           <img
             height="60px"
             src="@/assets/images/built-on-openbmc-logo.svg"
-            alt="Built on OpenBMC"
+            alt="Built on Zvezda"
           />
         </div>
       </div>

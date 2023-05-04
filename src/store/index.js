@@ -13,6 +13,9 @@ import ControlStore from './modules/Operations/ControlStore';
 import PowerControlStore from './modules/ResourceManagement/PowerControlStore';
 import PowerPolicyStore from './modules/Settings/PowerPolicyStore';
 import NetworkStore from './modules/Settings/NetworkStore';
+import RemoteLogsStore from './modules/Settings/RemoteLogsStore';
+import RemoteEmailLogsStore from './modules/Settings/RemoteEmailLogsStore';
+import RemoteSNMPLogsStore from './modules/Settings/RemoteSNMPLogsStore';
 import EventLogStore from './modules/Logs/EventLogStore';
 import DumpsStore from './modules/Logs/DumpsStore';
 import SensorsStore from './modules/HardwareStatus/SensorsStore';
@@ -28,6 +31,7 @@ import AssemblyStore from './modules/HardwareStatus/AssemblyStore';
 import PostCodeLogsStore from './modules/Logs/PostCodeLogsStore';
 import PoliciesStore from './modules/SecurityAndAccess/PoliciesStore';
 import FactoryResetStore from './modules/Operations/FactoryResetStore';
+import KvmConsoleStore from './modules/Operations/KvmConsoleStore';
 import KeyClearStore from './modules/Operations/KeyClearStore';
 
 import WebSocketPlugin from './plugins/WebSocketPlugin';
@@ -54,6 +58,9 @@ export default new Vuex.Store({
     powerPolicy: PowerPolicyStore,
     powerSupply: PowerSupplyStore,
     network: NetworkStore,
+    remoteLogs: RemoteLogsStore,
+    remoteEmailLogs: RemoteEmailLogsStore,
+    remoteSNMPLogs: RemoteSNMPLogsStore,
     eventLog: EventLogStore,
     dumps: DumpsStore,
     sensors: SensorsStore,
@@ -70,6 +77,7 @@ export default new Vuex.Store({
     virtualMedia: VirtualMediaStore,
     policies: PoliciesStore,
     factoryReset: FactoryResetStore,
+    kvmConsole: KvmConsoleStore,
     keyClear: KeyClearStore,
   },
   plugins: [WebSocketPlugin],

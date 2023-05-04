@@ -21,6 +21,7 @@
             "save": "Save",
             "saveSettings": "Save settings",
             "selected": "Selected",
+            "start": "Start"
             "ok": "OK",
             "warning": "Warning",
             "critical": "Critical"
@@ -110,6 +111,8 @@
         "dateTime": "@:appPageTitle.dateTime",
         "dumps": "@:appPageTitle.dumps",
         "eventLogs": "@:appPageTitle.eventLogs",
+        "eventLogs1": "@:appPageTitle.eventLogs1",
+        "eventLogs2": "@:appPageTitle.eventLogs2",
         "factoryReset": "@:appPageTitle.factoryReset",
         "firmware": "@:appPageTitle.firmware",
         "hardwareStatus": "Hardware status",
@@ -119,6 +122,7 @@
         "logs": "Logs",
         "userManagement": "@:appPageTitle.userManagement",
         "network": "@:appPageTitle.network",
+        "remoteLogs": "@:appPageTitle.remoteLogs",
         "overview": "@:appPageTitle.overview",
         "primaryNavigation": "Primary navigation",
         "postCodeLogs": "@:appPageTitle.postCodeLogs",
@@ -139,7 +143,9 @@
         "sessions": "Sessions",
         "dateTime": "Date and time",
         "dumps": "Dumps",
-        "eventLogs": "Event logs",
+        "eventLogs": "BMC Events",
+        "eventLogs1": "System Events",
+        "eventLogs2": "Security Events",
         "factoryReset": "Factory reset",
         "firmware": "Firmware",
         "inventory": "Inventory and LEDs",
@@ -148,6 +154,7 @@
         "userManagement": "User management",
         "login": "Login",
         "network": "Network",
+        "remoteLogs": "Remote Logs",
         "overview": "Overview",
         "pageNotFound": "Page not found",
         "postCodeLogs": "POST code logs",
@@ -485,10 +492,22 @@
     "pageKvm": {
         "openNewTab": "Open in new tab",
         "buttonCtrlAltDelete": "Send Ctrl+Alt+Delete",
+        "buttonVideoRecordStart": "Start video record",
+        "buttonVideoRecordStop": "Stop video record",
+        "modal": {
+          "startVideoRecordingTitle": "Start video record",
+          "colorQuality": "Color quality",
+          "FPS": "Frames per second",
+          "timeOfPart": "Time of part (in seconds)",
+          "autoDownload": "Auto download"
+        },
         "status": "Status",
         "connected": "Connected",
         "connecting": "Connecting",
-        "disconnected": "Disconnected"
+        "disconnected": "Disconnected",
+        "toast": {
+          "invalidVideoParams": "Invalid video parameters are used."
+        }
     },
     "pageLdap": {
         "pageDescription": "Configure LDAP settings and manage role groups",
@@ -741,6 +760,63 @@
             "successSaveNetworkSettings": "Successfully updated %{setting} settings."
         }
     },
+   "pageRemoteLogs": {
+       "addNewRemoteLog": "Add new rsyslog configuration",
+       "deleteRemoteLog": "Delete rsyslog configuration",
+       "editRemoteLog": "Edit rsyslog configuration",
+       "addNewRemoteEmailLog": "Add new remote log email configuration",
+       "deleteRemoteEmailLog": "Delete remote log email configuration",
+       "editRemoteEmailLog": "Edit remote log email configuration",
+       "addNewRemoteSNMPLog": "Add new remote log SNMP configuration",
+       "deleteRemoteSNMPLog": "Delete remote log SNMP configuration",
+       "editRemoteSNMPLog": "Edit remote log SNMP configuration",
+       "modal": {
+          "deleteConfirmMessage": "Are you sure you want to delete record for rsyslog server %{server}:%{serverPort}? This action cannot be undone.",
+          "deleteEmailConfirmMessage": "Are you sure you want to delete record for email server %{server}:%{serverPort}? This action cannot be undone.",
+          "deleteSNMPConfirmMessage": "Are you sure you want to delete record for SNMP server %{server}:%{serverPort}? This action cannot be undone.",
+          "severity": "Severity",
+          "substr": "Filter substring",
+          "server": "Remote server",
+          "serverPort": "Remote server port",
+          "connType": "Connection type",
+          "userName": "User name",
+          "userPass": "User password",
+          "srcEmail": "Source email",
+          "destEmail": "Destination email"
+       },
+       "table": {
+          "id": "Number",
+          "severity": "Severity",
+          "substr": "Filter substring",
+          "server": "Remote server",
+          "serverPort": "Remote server port",
+          "connType": "Connection type",
+          "userName": "User name",
+          "userPass": "User password",
+          "srcEmail": "Source email",
+          "destEmail": "Destination email"
+       },
+       "toast": {
+          "errorAddRemoteLog": "Error adding rsyslog configuration.",
+          "successAddRemoteLog": "Successfully added %{server}:%{serverPort} rsyslog configuration.",
+          "errorDeleteRemoteLog": "Error deleting rsyslog configuration.",
+          "successDeleteRemoteLog": "Successfully deleted %{server}:%{serverPort} rsyslog configuration.",
+          "errorUpdateRemoteLog": "Error updating rsyslog configuration.",
+          "successUpdateRemoteLog": "Successfully updated %{server}:%{serverPort} rsyslog configuration.",
+          "errorAddRemoteEmailLog": "Error adding remote log email configuration.",
+          "successAddRemoteEmailLog": "Successfully added %{server}:%{serverPort} remote log email configuration.",
+          "errorDeleteRemoteEmailLog": "Error deleting remote log email configuration.",
+          "successDeleteRemoteEmailLog": "Successfully deleted %{server}:%{serverPort} remote log email configuration.",
+          "errorUpdateRemoteEmailLog": "Error updating remote log email configuration.",
+          "successUpdateRemoteEmailLog": "Successfully updated %{server}:%{serverPort} remote log email configuration.",
+          "errorAddRemoteSNMPLog": "Error adding remote log SNMP configuration.",
+          "successAddRemoteSNMPLog": "Successfully added %{server}:%{serverPort} remote log SNMP configuration.",
+          "errorDeleteRemoteSNMPLog": "Error deleting remote log SNMP configuration.",
+          "successDeleteRemoteSNMPLog": "Successfully deleted %{server}:%{serverPort} remote log SNMP configuration.",
+          "errorUpdateRemoteSNMPLog": "Error updating remote log SNMP configuration.",
+          "successUpdateRemoteSNMPLog": "Successfully updated %{server}:%{serverPort} remote log SNMP configuration."
+       }
+    },
     "pagePageNotFound": {
         "description": "The requested resource could not be found."
     },
@@ -935,7 +1011,7 @@
     },
     "pageVirtualMedia": {
         "configureConnection": "Configure Connection",
-        "defaultDeviceName": "Virtual media device",
+        "defaultDeviceName": "Virtual media device. Support format: iso.",
         "start": "Start",
         "stop": "Stop",
         "virtualMediaSubTitleFirst": "Load image from web browser",

@@ -136,6 +136,11 @@ const AppNavigationMixin = {
               label: this.$t('appNavigation.powerRestorePolicy'),
               route: '/settings/power-restore-policy',
             },
+            {
+              id: 'remote-logs',
+              label: this.$t('appNavigation.remoteLogs'),
+              route: '/settings/remote-logs',
+            },
           ],
         },
         {

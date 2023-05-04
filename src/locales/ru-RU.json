@@ -21,6 +21,7 @@
             "save": "Сохранить",
             "saveSettings": "Сохранить настройки",
             "selected": "Выбрано",
+            "start": "Старт",
             "ok": "Хорошо",
             "warning": "Предупреждение",
             "critical": "Критический"
@@ -110,6 +111,8 @@
         "dateTime": "@:appPageTitle.dateTime",
         "dumps": "@:appPageTitle.dumps",
         "eventLogs": "@:appPageTitle.eventLogs",
+        "eventLogs1": "@:appPageTitle.eventLogs1",
+        "eventLogs2": "@:appPageTitle.eventLogs2",
         "factoryReset": "@:appPageTitle.factoryReset",
         "firmware": "@:appPageTitle.firmware",
         "hardwareStatus": "Статус оборудования",
@@ -119,6 +122,7 @@
         "logs": "Логи",
         "userManagement": "@:appPageTitle.userManagement",
         "network": "@:appPageTitle.network",
+        "remoteLogs": "@:appPageTitle.remoteLogs",
         "overview": "@:appPageTitle.overview",
         "primaryNavigation": "Основная навигация",
         "postCodeLogs": "@:appPageTitle.postCodeLogs",
@@ -139,7 +143,9 @@
         "sessions": "Сессии",
         "dateTime": "Дата и время",
         "dumps": "Дампы",
-        "eventLogs": "Журнал событий",
+        "eventLogs": "Журнал BMC",
+        "eventLogs1": "Журнал системных событий",
+        "eventLogs2": "Журнал событий безопасности",
         "factoryReset": "Сброс до заводских настроек",
         "firmware": "Встроенное ПО",
         "inventory": "Перечень оборудования и LED",
@@ -148,6 +154,7 @@
         "userManagement": "Управление пользователями",
         "login": "Логин",
         "network": "Сеть",
+        "remoteLogs": "Сетевые журналы",
         "overview": "Обзор",
         "pageNotFound": "Страница не найдена",
         "postCodeLogs": "Логи POST кодов",
@@ -485,10 +492,22 @@
     "pageKvm": {
         "openNewTab": "Открыть окно в новой вкладке",
         "buttonCtrlAltDelete": "Послать Ctrl+Alt+Delete",
+        "buttonVideoRecordStart": "Начать запись видео",
+        "buttonVideoRecordStop": "Завершить запись видео",
+        "modal": {
+          "startVideoRecordingTitle": "Начать запись видео",
+          "colorQuality": "Качество цветопередачи",
+          "FPS": "Кадров в секунду",
+          "timeOfPart": "Продолжительность одного интервала (в секундах)",
+          "autoDownload": "Автоматическое скачивание видео"
+        },
         "status": "Статус",
         "connected": "Подключено",
         "connecting": "Подключение",
-        "disconnected": "Отключено"
+        "disconnected": "Отключено",
+        "toast": {
+            "invalidVideoParams": "Выбраны недопустимые параметры записи видео."
+        }
     },
     "pageLdap": {
         "pageDescription": "Настройка параметров LDAP и управление группами",
@@ -739,6 +758,63 @@
             "successSaveNetworkSettings": "Успешное обновление %{setting} настроек."
         }
     },
+    "pageRemoteLogs": {
+        "addNewRemoteLog": "Добавить новую rsyslog конфигурацию",
+        "deleteRemoteLog": "Удалить rsyslog конфигурацию",
+        "editRemoteLog": "Редактировать rsyslog конфигурацию",
+        "addNewRemoteEmailLog": "Добавить новую email конфигурацию удаленного журнала",
+        "deleteRemoteEmailLog": "Удалить email конфигурацию удаленного журнала",
+        "editRemoteEmailLog": "Редактировать email конфигурацию удаленного журнала",
+        "addNewRemoteSNMPLog": "Добавить новую SNMP конфигурацию удаленного журнала",
+        "deleteRemoteSNMPLog": "Удалить SNMP конфигурацию удаленного журнала",
+        "editRemoteSNMPLog": "Редактировать SNMP конфигурацию удаленного журнала",
+        "modal": {
+          "deleteConfirmMessage": "Вы уверены, что хотите удалить запись для rsyslog сервера %{server}:%{serverPort}? Это действие нельзя отменить.",
+          "deleteEmailConfirmMessage": "Вы уверены, что хотите удалить запись для email сервера %{server}:%{serverPort}? Это действие нельзя отменить.",
+          "deleteSNMPConfirmMessage": "Вы уверены, что хотите удалить запись для SNMP сервера %{server}:%{serverPort}? Это действие нельзя отменить.",
+          "severity": "Уровень",
+          "substr": "Подстрока для выбора",
+          "server": "Удаленный сервер",
+          "serverPort": "Порт на удаленном сервере",
+          "connType": "Тип соединения",
+          "userName": "Имя пользователя",
+          "userPass": "Пароль",
+          "srcEmail": "Email отправителя",
+          "destEmail": "Email получателя"
+        },
+        "table": {
+          "id": "Номер",
+          "severity": "Уровень",
+          "substr": "Подстрока для выбора",
+          "server": "Удаленный сервер",
+          "serverPort": "Порт на удаленном сервере",
+          "connType": "Тип соединения",
+          "userName": "Имя пользователя",
+          "userPass": "Пароль",
+          "srcEmail": "Email отправителя",
+          "destEmail": "Email получателя"
+        },
+        "toast": {
+          "errorAddRemoteLog": "Ошибка создания rsyslog конфигурации.",
+          "successAddRemoteLog": "Успешное создание %{server}:%{serverPort} rsyslog конфигурации.",
+          "errorDeleteRemoteLog": "Ошибка удаления rsyslog конфигурации.",
+          "successDeleteRemoteLog": "Успешное удаление %{server}:%{serverPort} rsyslog конфигурации.",
+          "errorUpdateRemoteLog": "Ошибка обновления rsyslog конфигурации.",
+          "successUpdateRemoteLog": "Успешное обновление %{server}:%{serverPort} rsyslog конфигурации.",
+          "errorAddRemoteEmailLog": "Ошибка создания email конфигурацию удаленного журнала.",
+          "successAddRemoteEmailLog": "Успешное создание %{server}:%{serverPort} email конфигурацию удаленного журнала.",
+          "errorDeleteRemoteEmailLog": "Ошибка удаления email конфигурацию удаленного журнала.",
+          "successDeleteRemoteEmailLog": "Успешное удаление %{server}:%{serverPort} email конфигурацию удаленного журнала.",
+          "errorUpdateRemoteEmailLog": "Ошибка обновления email конфигурацию удаленного журнала.",
+          "successUpdateRemoteEmailLog": "Успешное обновление %{server}:%{serverPort} email конфигурацию удаленного журнала.",
+          "errorAddRemoteSNMPLog": "Ошибка создания SNMP конфигурацию удаленного журнала.",
+          "successAddRemoteSNMPLog": "Успешное создание %{server}:%{serverPort} SNMP конфигурацию удаленного журнала.",
+          "errorDeleteRemoteSNMPLog": "Ошибка удаления SNMP конфигурацию удаленного журнала.",
+          "successDeleteRemoteSNMPLog": "Успешное удаление %{server}:%{serverPort} SNMP конфигурацию удаленного журнала.",
+          "errorUpdateRemoteSNMPLog": "Ошибка обновления SNMP конфигурацию удаленного журнала.",
+          "successUpdateRemoteSNMPLog": "Успешное обновление %{server}:%{serverPort} SNMP конфигурацию удаленного журнала."
+        }
+    },
     "pagePageNotFound": {
         "description": "Запрашиваемый ресурс не найден."
     },
@@ -933,7 +1009,7 @@
     },
     "pageVirtualMedia": {
         "configureConnection": "Сконфигурировать соединение",
-        "defaultDeviceName": "Виртуальный носитель",
+        "defaultDeviceName": "Виртуальный носитель. Формат поддеживаемых файлов: iso.",
         "start": "Старт",
         "stop": "Стоп",
         "virtualMediaSubTitleFirst": "Подключить образ с помощью веб браузера",

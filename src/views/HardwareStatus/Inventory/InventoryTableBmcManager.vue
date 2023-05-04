@@ -54,15 +54,18 @@
                 <!-- Name -->
                 <dt>{{ $t('pageInventory.table.name') }}:</dt>
                 <dd>{{ dataFormatter(item.name) }}</dd>
-                <!-- Part number -->
+                <!-- Part number
                 <dt>{{ $t('pageInventory.table.partNumber') }}:</dt>
                 <dd>{{ dataFormatter(item.partNumber) }}</dd>
-                <!-- Serial number -->
+                -->
+                <!-- Serial number
                 <dt>{{ $t('pageInventory.table.serialNumber') }}:</dt>
                 <dd>{{ dataFormatter(item.serialNumber) }}</dd>
-                <!-- Spare part number -->
+                -->
+                <!-- Spare part number
                 <dt>{{ $t('pageInventory.table.sparePartNumber') }}:</dt>
                 <dd>{{ dataFormatter(item.sparePartNumber) }}</dd>
+                -->
                 <!-- Model -->
                 <dt>{{ $t('pageInventory.table.model') }}:</dt>
                 <dd>{{ dataFormatter(item.model) }}</dd>
