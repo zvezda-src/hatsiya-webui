@@ -128,7 +128,7 @@ export default {
       }
       return this.$t('pageKvm.connecting');
     },
-      videoFiles() {
+    videoFiles() {
       return this.$store.getters['kvmConsole/allVideoFiles'];
     },
   },
